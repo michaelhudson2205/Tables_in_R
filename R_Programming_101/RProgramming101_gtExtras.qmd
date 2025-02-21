@@ -1,0 +1,52 @@
+---
+title: "RProgramming101_gtExtras"
+format: html
+---
+
+Link to the YouTube video:
+
+<https://www.youtube.com/watch?v=AJ0_PCIVXD4>
+
+```{r}
+#| label: libraries
+#| message: false
+
+library(gtExtras)
+library(tidyverse)
+```
+
+```{r}
+#| label: irisSummary
+#| warning: false
+
+iris |> 
+  gt_plt_summary()
+```
+
+```{r}
+#| label: mtcarsIcons
+
+mtcars |> 
+  group_by(cyl) |> 
+  summarise(Median = round(median(mpg), 1),
+            Mean = round(mean(mpg), 1),
+            Distribution = list(mpg),
+            .groups = "drop") |> 
+  gt() |> 
+  gt_plt_dist(Distribution) |> 
+  gt_theme_guardian() |> 
+  tab_header(title = "Miles per gallon ")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
