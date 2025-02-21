@@ -1,0 +1,37 @@
+---
+title: "EqitableEquations_gt"
+format: html
+---
+
+```{r}
+#| label: setup
+
+library(gt)
+library(tidyverse)
+library(modeldata)
+```
+
+```{r}
+#| label: preprocessing
+
+scat_table1 <- scat |> 
+  select(Species,
+         Site,
+         Length,
+         Diameter,
+         Mass,
+         d13C,
+         d15N) |> 
+  group_by(Species) |> 
+  summarise(across(where(is.numeric),
+                   \(x) round(mean(x, na.rm = TRUE), 1)),
+            count = n(), .groups = "drop")
+```
+
+## A great table
+
+```{r}
+scat_table1 |> 
+  gt()
+```
+
