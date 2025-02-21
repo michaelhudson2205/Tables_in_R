@@ -3,6 +3,10 @@ title: "EqitableEquations_gt"
 format: html
 ---
 
+Link to the YouTube video:
+
+<https://www.youtube.com/watch?v=jptX745mp7M>
+
 ```{r}
 #| label: setup
 #| message: false
