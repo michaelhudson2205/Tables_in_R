@@ -1,0 +1,75 @@
+---
+title: "DrLyndonWalker_gtExtras"
+format: html
+---
+
+YouTube: <https://www.youtube.com/watch?v=kjkim-1PyeA>
+
+```{r}
+#| label: libraries
+#| message: false
+
+library(tidyverse)
+library(gt)
+library(gtExtras)
+```
+
+```{r}
+#| label: chickweight
+
+gt_plt_summary(datasets::ChickWeight)
+```
+
+```{r}
+#| label: highlightRow
+
+head(mtcars[, 1:5]) |> 
+  rownames_to_column("car") |> 
+  gt() |> 
+  gt_highlight_rows(rows = 2, font_weight = "normal")
+```
+
+```{r}
+#| label: images
+
+# couldn't find the images
+```
+
+```{r}
+#| label: winLoss
+
+set.seed(37)
+data_in <- tibble(
+  grp = rep(c("A", "B", "C"), each = 10),
+  wins = sample(c(0, 1, 0.5), size = 30, prob = c(0.45, 0.45, 0.1), replace = TRUE)) |> 
+    group_by(grp) |> 
+    summarise(wins = list(wins), .groups = "drop")
+
+data_in
+
+win_table <- data_in |> 
+  gt() |> 
+  gt_plt_winloss(wins)
+
+win_table
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
