@@ -1,0 +1,105 @@
+---
+title: "RProgramming101_more"
+format: html
+---
+
+YouTube: <https://www.youtube.com/watch?v=ZSs7IThn1-s>
+
+```{r}
+#| label: libraries
+#| message: false
+
+library(tidyverse)
+library(RColorBrewer)
+library(gtExtras)
+library(gapminder)
+```
+
+```{r}
+#| label: gapminderData
+
+plot <- gapminder |> 
+  rename(Country = country) |> 
+  filter(continent == "Europe") |> 
+  group_by(Country) |> 
+  summarise(`GDP pc` = round(mean(gdpPercap)),
+            `Pop size` = round(mean(pop)),
+            `Life expectancy` = list(lifeExp),
+            .groups = "drop") |> 
+  arrange(-`GDP pc`) |> 
+  head(10) |> 
+  gt() |> 
+  gt_plt_dist(`Life expectancy`) |> 
+  tab_header(title = "The GDP and Pop Size of Europe") |> 
+  cols_align(align = "left", columns = "Country")
+
+plot
+```
+
+```{r}
+#| label: themes
+
+plot |> 
+  gt_theme_538()
+
+plot |> 
+  gt_theme_dark()
+
+plot |> 
+  gt_theme_espn()
+
+plot <- plot |> 
+  gt_theme_pff() |> 
+  fmt_number(columns = `GDP pc`, decimals = 0, sep_mark = ",", use_seps = TRUE)
+
+plot
+```
+
+```{r}
+plot |> 
+  gt_highlight_rows(rows = Country %in% c("Iceland", "Belgium"), fill = "lightpink")
+```
+
+```{r}
+#| label: theColours
+
+plot2 <- gapminder |> 
+  rename(Country = country) |> 
+  filter(continent == "Europe") |> 
+  group_by(Country) |> 
+  summarise(`GDP pc` = round(mean(gdpPercap)),
+            `Pop size` = round(mean(pop)),
+            `Life expectancy` = list(lifeExp),
+            .groups = "drop") |> 
+  arrange(-`GDP pc`) |> 
+  head(10)
+
+plot2 |> 
+  gt() |> 
+  gt_plt_dist(`Life expectancy`) |> 
+  gt_color_rows(columns = `Pop size`,
+                palette = "Pastel1") |> 
+  gt_plt_bar_pct(column = `GDP pc`,
+                 fill = "steelblue",
+                 height = 15,
+                 width = 100)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
